@@ -20,7 +20,9 @@ namespace WebApplication.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            string today = DateTime.Now.ToShortDateString();
+            ViewData["Day"] = today;
+            return View();            
         }
 
         public IActionResult Privacy()
