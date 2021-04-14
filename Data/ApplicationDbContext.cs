@@ -12,6 +12,6 @@ namespace WebApplication.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
         }
-        public DbSet
+        public DbSet<Users> Users { get; set; }
     }
 }

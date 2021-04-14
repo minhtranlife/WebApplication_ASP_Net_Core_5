@@ -11,8 +11,6 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using WebApplication.Data;
 
-
-
 namespace WebApplication
 {
     public class Startup
