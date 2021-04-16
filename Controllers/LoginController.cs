@@ -28,20 +28,25 @@ namespace WebApplication.Controllers
         [HttpPost]
         public IActionResult Signin(string username, string password)
         {
-            /*if (username != null && password != null && username.Equals("minhtran") && password.Equals("123"))
-            {
-                HttpContext.Session.SetString("username", username);
-                return View("Views/Home/Index.cshtml");
+            var models = _context.Users.Where(p => p.Username == username).First();
+            if (models != null) {                
+                if (models.Password == password)
+                {
+                    HttpContext.Session.SetString("username", username);
+                    return View("Views/Home/Index.cshtml");
+                }
+                else
+                {
+                    ViewBag.error = "Invalid Account";
+                    return View("Views/Login/Login.cshtml");
+                }
             }
             else
             {
                 ViewBag.error = "Invalid Account";
                 return View("Views/Login/Login.cshtml");
-            }*/
-            List<Users> models = _context.Users.Where(p =>p.Username == username).Where(p => p.Password == password).First();          
-
-
-            return Ok(models);
+            }
+           
         }
 
         [Route("logout")]
@@ -49,7 +54,7 @@ namespace WebApplication.Controllers
         public IActionResult Logout()
         {
             HttpContext.Session.Remove("username");
-            return Redirect("");
+            return Redirect("Home");
         }
     }
 }
