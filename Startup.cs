@@ -26,7 +26,7 @@ namespace WebApplication
         public void ConfigureServices(IServiceCollection services)
         {           
             services.AddControllersWithViews();
-            
+            services.AddSession();
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
         }
@@ -46,7 +46,7 @@ namespace WebApplication
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseSession();
             app.UseRouting();
 
             app.UseAuthorization();

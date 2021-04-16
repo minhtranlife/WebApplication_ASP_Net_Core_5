@@ -13,5 +13,6 @@ namespace WebApplication.Data
         {
         }
         public DbSet<Users> Users { get; set; }
+        
     }
 }

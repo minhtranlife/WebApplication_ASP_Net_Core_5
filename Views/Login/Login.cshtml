@@ -73,6 +73,7 @@
             <b style="color: #32c5d2">
                 ASP.NET CORE LOGIN               
             </b>
+           
         </h2>
     </div>
 
@@ -86,49 +87,46 @@
     <div class="content">
         <!-- BEGIN LOGIN FORM -->
         <p class="form-title"><span style="font-size: 19px">Welcome. </span><span style="color: #c9dce9; font-size: 17px">Please login</span></p>
-        <div class="alert alert-danger display-hide">
-            <button class="close" data-close="alert"></button>
-            <span>
-                Nhập thông tin username và password.
-            </span>
-        </div>
-        <div class="form-group">
-            <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
-            <label class="control-label visible-ie8 visible-ie9">Username</label>
-            <div class="input-icon">
-                <i class="fa fa-user"></i>
-                <input class="form-control required" type="text" autocomplete="off" placeholder="Username" name="username" id="username" autofocus>
+        <p>@ViewBag.error</p>
+        <form method="post" asp-controller="login" asp-action="signin">
+            <div class="form-group">
+                <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+                <label class="control-label visible-ie8 visible-ie9">Username</label>
+                <div class="input-icon">
+                    <i class="fa fa-user"></i>
+                    <input class="form-control required" type="text" autocomplete="off" placeholder="Username" name="username" id="username" autofocus>
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label visible-ie8 visible-ie9">Password</label>
-            <div class="input-icon">
-                <i class="fa fa-lock"></i>
-                <input class="form-control required" type="password" autocomplete="off" placeholder="Password" name="password" id="password" />
+            <div class="form-group">
+                <label class="control-label visible-ie8 visible-ie9">Password</label>
+                <div class="input-icon">
+                    <i class="fa fa-lock"></i>
+                    <input class="form-control required" type="password" autocomplete="off" placeholder="Password" name="password" id="password" />
+                </div>
             </div>
-        </div>
-        <div class="form-actions">
-            <button type="submit" class="btn red pull-right" id="login_button" onclick="validatePassword();">
-                Login <i class="m-icon-swapright m-icon-white"></i>
-            </button>
-            <br>
-        </div>
-        <div class="forget-password">
+            <div class="form-actions">
+                <button type="submit" class="btn red pull-right" id="login_button" onclick="validatePassword();">
+                    Login <i class="m-icon-swapright m-icon-white"></i>
+                </button>
+                <br>
+            </div>
+            <div class="forget-password">
 
-        </div>
-        <div class="create-account">
-            <p>
-                Bạn chưa có tài khoản?&nbsp;<a href="/dangkytaikhoantruycap">
-                    Đăng ký tài khoản
-                </a>
-            </p>
-            <p>
-                <a href="" target="_blank">
-                    Thông tin hỗ trợ&nbsp;
-                </a>
-            </p>
+            </div>
+            <div class="create-account">
+                <p>
+                    Bạn chưa có tài khoản?&nbsp;<a href="/dangkytaikhoantruycap">
+                        Đăng ký tài khoản
+                    </a>
+                </p>
+                <p>
+                    <a href="" target="_blank">
+                        Thông tin hỗ trợ&nbsp;
+                    </a>
+                </p>
 
-        </div>
+            </div>
+        </form>
     </div>
     <!-- END LOGIN -->
     <!-- BEGIN COPYRIGHT -->
