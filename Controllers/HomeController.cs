@@ -6,35 +6,25 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using WebApplication.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace WebApplication.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
-
+        [Route("")]
+        [Route("Home")]
         public IActionResult Index()
         {
-            string today = DateTime.Now.ToShortDateString();
-            ViewData["Day"] = today;
-            return View();            
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString("username")))
+            {                
+                return Redirect("/Login");
+            }
+            else
+            {
+                return View("Views/Home/Index.cshtml");
+            }
+        }       
         
     }
 }

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebApplication.Models;
 using WebApplication.Data;
+using Newtonsoft.Json;
 
 namespace WebApplication.Controllers
 {
@@ -28,33 +29,44 @@ namespace WebApplication.Controllers
         [HttpPost]
         public IActionResult Signin(string username, string password)
         {
-            var models = _context.Users.Where(p => p.Username == username).First();
-            if (models != null) {                
-                if (models.Password == password)
+            if (username != null && password != null)
+            {                
+                var userInfo = new Users() {Username = username};
+
+                if (userInfo != null)
                 {
-                    HttpContext.Session.SetString("username", username);
-                    return View("Views/Home/Index.cshtml");
+                    if (userInfo.Password == password)
+                    {
+                        HttpContext.Session.SetString("SsAdmin", JsonConvert.SerializeObject(userInfo));
+                        //return Redirect("/");
+                    }
+                    else
+                    {
+                        ViewBag.error = "Invalid Account";
+                        return View("Views/Login/Login.cshtml");
+                    }
                 }
                 else
                 {
                     ViewBag.error = "Invalid Account";
                     return View("Views/Login/Login.cshtml");
                 }
+
             }
             else
             {
                 ViewBag.error = "Invalid Account";
                 return View("Views/Login/Login.cshtml");
             }
-           
         }
 
         [Route("logout")]
         [HttpGet]
         public IActionResult Logout()
         {
-            HttpContext.Session.Remove("username");
-            return Redirect("Home");
+            HttpContext.Session.Remove("SsAdmin");
+            return View("Views/Login/Login.cshtml");
         }
     }
+
 }

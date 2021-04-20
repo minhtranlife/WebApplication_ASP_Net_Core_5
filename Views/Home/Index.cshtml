@@ -1,17 +1,16 @@
-﻿@using Microsoft.AspNetCore.Http;
-@{
-    ViewData["Title"] = "Home Page";
+﻿@{   
+    ViewData["Title"] = "Home";
 }
 
-
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-    @if (Context.Session.GetString("username") != null)
-    {
-        <h1>Hello @Context.Session.GetString("username")</h1>
-        <h1>@ViewData["Day"]</h1>
-    }
-
-
+<h3 class="page-title">
+    Supports<small></small>
+</h3>
+<div class="row">
+    <div class="col-md-12">
+        <div class="well">
+            <p>
+                Web application là một ứng dụng chạy trên web thực hiện một số chức năng cơ bản như chia sẻ hình ảnh, tính toán, mua sắm… mà bạn có thể dễ dàng tiếp cận thông qua intranet hay Internet. ... Web app có nhiều chức năng và tính tương thích cao hơn so với website.
+            </p>    
+        </div>
+    </div>
 </div>
