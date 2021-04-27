@@ -6,51 +6,49 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebApplication.Models;
 using WebApplication.Data;
-using Newtonsoft.Json;
 
 namespace WebApplication.Controllers
 {
     public class LoginController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext _db;
 
-        public LoginController(ApplicationDbContext context)
+        public LoginController(ApplicationDbContext db)
         {
-            _context = context;
+            _db = db;
         }
 
-        [Route("login")]
-        public IActionResult Login()
+        [Route("")]
+        public IActionResult Index()
         {            
             return View("Views/Login/Login.cshtml");
         }
 
-        [Route("signin")]
+        [Route("login")]
         [HttpPost]
-        public IActionResult Signin(string username, string password)
+        public IActionResult LoginApp(string username, string password)
         {
             if (username != null && password != null)
-            {                
-                var userInfo = new Users() {Username = username};
-
-                if (userInfo != null)
-                {
-                    if (userInfo.Password == password)
-                    {
-                        HttpContext.Session.SetString("SsAdmin", JsonConvert.SerializeObject(userInfo));
-                        //return Redirect("/");
-                    }
-                    else
-                    {
-                        ViewBag.error = "Invalid Account";
-                        return View("Views/Login/Login.cshtml");
-                    }
-                }
-                else
-                {
-                    ViewBag.error = "Invalid Account";
-                    return View("Views/Login/Login.cshtml");
-                }
+            {
+               
+                //if (username != null)
+                //{
+                //    if (userInfo.Password == password)
+                //    {
+                        //HttpContext.Session.SetString("SsAdmin", JsonConvert.SerializeObject(userInfo));
+                        return Redirect("/");
+                //    }
+                //    else
+                //    {
+                //        ViewBag.error = "Invalid Account";
+                //        return View("Views/Login/Login.cshtml");
+                //    }
+                //}
+                //else
+                //{
+                //    ViewBag.error = "Invalid Account";
+                //    return View("Views/Login/Login.cshtml");
+                //}
 
             }
             else

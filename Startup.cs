@@ -25,7 +25,11 @@ namespace WebApplication
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {           
+        {                      
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddRazorPages();
+            services.AddDistributedMemoryCache();
             services.AddControllersWithViews();
             services.AddSession(options =>
             {
@@ -33,10 +37,6 @@ namespace WebApplication
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddRazorPages();
-            services.AddDistributedMemoryCache();
 
             services.AddMvc().AddRazorPagesOptions(options =>
             {
