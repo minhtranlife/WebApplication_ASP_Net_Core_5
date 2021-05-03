@@ -18,42 +18,45 @@ namespace WebApplication.Controllers
             _db = db;
         }
 
-        [Route("")]
+       
+        [Route("login")]
         public IActionResult Index()
         {            
             return View("Views/Login/Login.cshtml");
         }
 
-        [Route("login")]
+        [Route("login/signin")]
         [HttpPost]
-        public IActionResult LoginApp(string username, string password)
+        public IActionResult SigninApp(string username, string password)
         {
+
             if (username != null && password != null)
             {
-               
-                //if (username != null)
-                //{
-                //    if (userInfo.Password == password)
-                //    {
-                        //HttpContext.Session.SetString("SsAdmin", JsonConvert.SerializeObject(userInfo));
+                var model = _db.Users.Where(u => u.Username == username).First();
+                // Error when user not in db
+                if (model != null)
+                {
+                    if(model.Password == password)
+                    {
+                        HttpContext.Session.SetString("SsAdmin", model.Name);
+                        HttpContext.Session.SetString("username", model.Username);
                         return Redirect("/");
-                //    }
-                //    else
-                //    {
-                //        ViewBag.error = "Invalid Account";
-                //        return View("Views/Login/Login.cshtml");
-                //    }
-                //}
-                //else
-                //{
-                //    ViewBag.error = "Invalid Account";
-                //    return View("Views/Login/Login.cshtml");
-                //}
-
+                    }
+                    else
+                    {
+                        ViewBag.error = "Invalid Password";
+                        return View("Views/Login/Login.cshtml");
+                    }
+                }
+                else
+                {
+                    ViewBag.error = "Invalid Account";
+                    return View("Views/Login/Login.cshtml");
+                }
             }
             else
             {
-                ViewBag.error = "Invalid Account";
+                ViewBag.error = "Username & Password Required !!!";
                 return View("Views/Login/Login.cshtml");
             }
         }
@@ -62,7 +65,7 @@ namespace WebApplication.Controllers
         [HttpGet]
         public IActionResult Logout()
         {
-            HttpContext.Session.Remove("SsAdmin");
+            HttpContext.Session.Remove("username");
             return View("Views/Login/Login.cshtml");
         }
     }

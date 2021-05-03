@@ -35,7 +35,7 @@ namespace WebApplication.Models
         [Required]
         [MaxLength(5)]
         public string Sadmin { get; set; }
-        public string Permission { get; set; }
+        public string Permission { get; set; }    
 
     }
 }
