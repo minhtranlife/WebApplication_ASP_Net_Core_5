@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebApplication.Models;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 
 namespace WebApplication.Controllers
 {
@@ -16,15 +17,17 @@ namespace WebApplication.Controllers
         [Route("Home")]
         public IActionResult Index()
         {
-            if (string.IsNullOrEmpty(HttpContext.Session.GetString("username")))
-            {                
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
                 return Redirect("/Login");
             }
             else
-            {
+            {               
                 return View("Views/Home/Index.cshtml");
             }
-        }       
+        }         
+
         
     }
+
 }

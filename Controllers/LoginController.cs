@@ -4,8 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Text;
 using WebApplication.Models;
 using WebApplication.Data;
+using Newtonsoft.Json;
 
 namespace WebApplication.Controllers
 {
@@ -18,10 +20,10 @@ namespace WebApplication.Controllers
             _db = db;
         }
 
-       
+
         [Route("login")]
         public IActionResult Index()
-        {            
+        {
             return View("Views/Login/Login.cshtml");
         }
 
@@ -32,14 +34,19 @@ namespace WebApplication.Controllers
 
             if (username != null && password != null)
             {
-                var model = _db.Users.Where(u => u.Username == username).First();
+                
                 // Error when user not in db
-                if (model != null)
+                try 
                 {
-                    if(model.Password == password)
+                    var model = _db.Users.Where(u => u.Username == username).First();
+                    if (model.Password == password)
                     {
-                        HttpContext.Session.SetString("SsAdmin", model.Name);
+                        HttpContext.Session.SetString("name", model.Name);
                         HttpContext.Session.SetString("username", model.Username);
+                        HttpContext.Session.SetString("permission", model.Permission);
+                        HttpContext.Session.SetString("SsAdmin", JsonConvert.SerializeObject(model));
+
+
                         return Redirect("/");
                     }
                     else
@@ -48,7 +55,7 @@ namespace WebApplication.Controllers
                         return View("Views/Login/Login.cshtml");
                     }
                 }
-                else
+                catch
                 {
                     ViewBag.error = "Invalid Account";
                     return View("Views/Login/Login.cshtml");
@@ -66,8 +73,9 @@ namespace WebApplication.Controllers
         public IActionResult Logout()
         {
             HttpContext.Session.Remove("username");
-            return View("Views/Login/Login.cshtml");
-        }
+            HttpContext.Session.Remove("name");
+            HttpContext.Session.Remove("permission");
+            return Redirect("/Login");
+        }    
     }
-
 }
