@@ -12,13 +12,22 @@ namespace WebApplication.Controllers
 {    
     public class UsersController : Controller
     {
+        private readonly ApplicationDbContext _db;
+       
+        public UsersController(ApplicationDbContext db)
+        {
+            _db = db;
+        }
+
+
         [Route("users")]
         [Route("users/index")]
         [HttpGet]
         public IActionResult Index()
         {
+            ViewData.Model = _db.Users;  
             
-            return View ("Views/BackEnd/Users/Index.cshtml");
+            return View ("Views/BackEnd/Users/Index.cshtml", ViewData);
         }
 
     }

@@ -9,6 +9,7 @@ using WebApplication.Models;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 
+
 namespace WebApplication.Controllers
 {
     public class HomeController : Controller
@@ -22,12 +23,12 @@ namespace WebApplication.Controllers
                 return Redirect("/Login");
             }
             else
-            {               
+            {
                 return View("Views/Home/Index.cshtml");
             }
-        }         
+        }
+       
 
-        
     }
 
 }

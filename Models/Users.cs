@@ -16,7 +16,7 @@ namespace WebApplication.Models
         public string Username { get; set; }
         [Required]
         [MinLength(6)]
-        [MaxLength(10)]
+        [MaxLength(50)]
         public string Password { get; set; }
         [Required]      
         [EmailAddress]

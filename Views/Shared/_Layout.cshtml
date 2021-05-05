@@ -16,7 +16,7 @@ License: You must have a valid license purchased only from themeforest(the above
 <html lang="en" class="no-js">
 <!--<![endif]-->
 <!-- BEGIN HEAD -->
-
+@using Microsoft.AspNetCore.Http;
 <head>
     <meta charset="utf-8" />
     <title>@ViewData["Title"]</title>
@@ -181,14 +181,14 @@ License: You must have a valid license purchased only from themeforest(the above
                     <li class="dropdown dropdown-user">
                         <a href="" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                             <img alt="" class="img-circle" src="/images/avatar/default-user.png" />
-                            <span class="username">                              
-                                <b>MT</b>
+                            <span class="username">
+                                <b>@Context.Session.GetString("name")</b>
                             </span>
                             <i class="fa fa-angle-down"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-default">
                             <li>
-                                <a href="logout">
+                                <a asp-controller="Login" asp-action="Logout">
                                     <i class="icon-key"></i> Đăng xuất
                                 </a>
                             </li>
