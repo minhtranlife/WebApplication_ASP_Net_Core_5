@@ -1,0 +1,80 @@
+﻿@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Create Users";
+}
+@model WebApplication.Models.Users
+
+@section custom_style{
+    <link rel="stylesheet" type="text/css" href="/assets/global/plugins/select2/select2.css" />
+}
+
+@section custom_script{
+    <script type="text/javascript" src="/assets/global/plugins/jquery-validation/js/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="/assets/global/plugins/select2/select2.min.js"></script>
+}
+<h3 class="page-title">
+    Edit<small>&nbsp;User</small>
+</h3>
+<!-- END PAGE HEADER-->
+<div class="row center">
+    <div class="col-md-12 center">
+        <!-- BEGIN VALIDATION STATES-->
+        <form asp-controller="Users" asp-action="Update" method="post">
+            <div class="portlet box blue">
+                <div class="portlet-body form">
+                    <!-- BEGIN FORM-->
+                    <div class="form-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Name<span class="require">*</span></label>
+                                    <input asp-for="Name" class="form-control" autofocus/>
+                                    <span asp-validation-for="Name" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Email</label>
+                                    <input asp-for="Email" class="form-control">
+                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Tài khoản truy cập<span class="require">*</span></label>
+                                    <input asp-for="Username" class="form-control">
+                                    <span asp-validation-for="Username" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <!--/span-->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Mật khẩu<span class="require">*</span></label>
+                                    <input asp-for="Password" class="form-control">
+                                    <span asp-validation-for="Password" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <!--/span-->
+                        </div>
+
+                    </div>
+                    <input hidden asp-for="Id"/>
+                    <!-- END FORM-->
+                </div>
+
+            </div>
+            <div style="text-align: center">
+                <a asp-controller="Users" asp-action="Index" class="btn btn-danger"><i class="fa fa-reply"></i>&nbsp;Back</a>
+                <button type="reset" class="btn btn-default"><i class="fa fa-refresh"></i>&nbsp;Refresh</button>
+                <button type="submit" class="btn green"><i class="fa fa-check"></i>&nbsp;Updatelll</button>
+            </div>
+        </form>
+        <!-- END VALIDATION STATES-->
+    </div>
+</div>
+@section Scripts{
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

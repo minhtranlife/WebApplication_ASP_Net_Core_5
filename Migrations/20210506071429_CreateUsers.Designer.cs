@@ -9,8 +9,8 @@ using WebApplication.Data;
 namespace WebApplication.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210504095908_Users")]
-    partial class Users
+    [Migration("20210506071429_CreateUsers")]
+    partial class CreateUsers
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

@@ -32,28 +32,24 @@ namespace WebApplication.Controllers
         [HttpPost]
         public IActionResult SigninApp(string username, string password)
         {
-
             if (username != null && password != null)
             {
-                
-                // Error when user not in db
-                try 
+
+                try
                 {
                     var model = _db.Users.Where(u => u.Username == username).First();
+                    
                     string md5_password = "";
                     using (MD5 md5Hash = MD5.Create())
                     {
                         string change = GetMd5Hash(md5Hash, password);
                         md5_password = change;
-                    }
+                    }                  
                     if (model.Password == md5_password)
-                    {
+                    {                       
                         HttpContext.Session.SetString("name", model.Name);
-                        HttpContext.Session.SetString("username", model.Username);
-                        HttpContext.Session.SetString("permission", model.Permission);
-                        HttpContext.Session.SetString("SsAdmin", JsonConvert.SerializeObject(model));
-
-
+                        HttpContext.Session.SetString("username", model.Username);                        
+                        HttpContext.Session.SetString("SsAdmin", JsonConvert.SerializeObject(model));  
                         return Redirect("/");
                     }
                     else

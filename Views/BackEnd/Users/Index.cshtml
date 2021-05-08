@@ -1,8 +1,11 @@
 ﻿@{
     Layout = "_Layout";
     ViewData["Title"] = "Users";
+
 }
 
+
+@model IEnumerable<WebApplication.Models.Users>
 
 @section custom_style{
     <link rel="stylesheet" type="text/css" href="/assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.css" />
@@ -19,6 +22,24 @@
         jQuery(document).ready(function () {
             TableManaged.init();
         });
+        $(function () {
+            $('#level').change(function () {
+                var current_path_url = '/users?';
+                var level = '&level=' + $('#level').val();
+                var url = current_path_url + level;
+                window.location.href = url;
+            });
+
+        })
+
+        function getId(id, username, name) {
+            document.getElementById("iddelete").value = id;
+            document.getElementById("username_del").innerHTML = username;
+            document.getElementById("name_del").innerHTML = name;
+        }
+        function ClickDelete() {
+            $('#frm_delete').submit();
+        }
     </script>
 }
 <h3 class="page-title">
@@ -30,22 +51,30 @@
         <!-- BEGIN EXAMPLE TABLE PORTLET-->
         <div class="portlet box">
 
-            <!--div class="portlet-title">
-                <div class="caption"></div>
-                <div class="actions">
-                    <a href=users/create" class="btn btn-default btn-sm">
-                    <i class="fa fa-plus"></i> Tạo tài khoản</a>
-                </div>
-            </div-->
-
             <div class="portlet-title">
                 <div class="caption"></div>
-                <div class="actions">`
-                    <a href="" class="btn btn-default btn-sm" target="_blank">
-                        <i class="fa fa-print"></i> Print
-                    </a>                        
+                <div class="actions">
+                    <a asp-controller="Users" asp-action="Create" class="btn btn-default btn-sm">
+                        <i class="fa fa-plus"></i>&nbsp;Create
+                    </a>
                 </div>
             </div>
+
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">                       
+                        <label>Level</label>
+                        <select class="form-control" name="level" id="level">
+                            <!option value="all" @((string)ViewData["Level"] == "all" ? "selected" : "")>All</!option>
+                            <!option value="T" @((string)ViewData["Level"] == "T" ? "selected" : "")>Provincials</!option>
+                            <!option value="H" @((string)ViewData["Level"] == "H" ? "selected" : "")>Districts</!option>
+                       
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+
             <hr>
             <div class="portlet-body">
 
@@ -55,14 +84,31 @@
                             <tr>
                                 <th style="text-align: center" width="2%">STT</th>
                                 <th style="text-align: center">Tên tài khoản</th>
-                                <th style="text-align: center" width="10%">Username</th>
+                                <th style="text-align: center">Username</th>
                                 <th style="text-align: center" width="5%">Level</th>
-                                <th style="text-align: center" width="20%">Trạng thái</th>
+                                <th style="text-align: center" width="10%">Trạng thái</th>
                                 <th style="text-align: center" width="25%">Thao tác</th>
                             </tr>
                         </thead>
                         <tbody>
-                       
+                            @foreach (var item in Model)
+                            {
+                                <tr class="odd gradeX">
+                                    <td style="text-align: center">@Html.DisplayFor(modelItem => item.Id)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Username)</td>
+                                    <td style="text-align: center">@Html.DisplayFor(modelItem => item.Level)</td>
+                                    <td></td>
+                                    <td>
+                                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-default btn-xs mbs"><i class="fa fa-edit"></i>&nbsp;Edit</a>
+                                        <button type="button" onclick="getId('@item.Id', '@item.Username', '@item.Name')" class="btn btn-default btn-xs mbs" data-target="#delete-modal" data-toggle="modal">
+                                            <i class="fa fa-trash-o"></i>&nbsp;
+                                            Delete
+                                        </button>
+                                    </td>
+
+                                </tr>
+                            }
                         </tbody>
                     </table>
                 </div>
@@ -76,18 +122,44 @@
 <div class="clearfix"></div>
 <div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                <h4 class="modal-title">Đồng ý xóa?</h4>
+        <form asp-controller="Users" asp-action="Delete" method="post">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h4 class="modal-title">Đồng ý xóa?</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <div class="form-group">
+                                    <label for="selGender" class="control-label">
+                                        Username:
+                                        <b id="username_del" style="color: #0000FF"></b>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="selGender" class="control-label">
+                                    Name:
+                                    <b id="name_del" style="color: #0000FF"></b>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" name="iddelete" id="iddelete">
+                <div class="modal-footer">
+                    <button type="submit" class="btn blue" onclick="ClickDelete()">Đồng ý</button>
+                    <button type="button" class="btn default" data-dismiss="modal">Hủy</button>
+                </div>
             </div>
-            <input type="hidden" name="iddelete" id="iddelete">
-            <div class="modal-footer">
-                <button type="submit" class="btn blue" onclick="ClickDelete()">Đồng ý</button>
-                <button type="button" class="btn default" data-dismiss="modal">Hủy</button>
-            </div>
-        </div>
-        <!-- /.modal-content -->
+            <!-- /.modal-content -->
+        </form>
     </div>
     <!-- /.modal-dialog -->
 </div>

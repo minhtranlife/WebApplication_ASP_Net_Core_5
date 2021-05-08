@@ -2,7 +2,7 @@
 
 namespace WebApplication.Migrations
 {
-    public partial class Users : Migration
+    public partial class CreateUsers : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
