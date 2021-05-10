@@ -25,6 +25,7 @@ namespace WebApplication.Controllers
         [Route("login")]
         public IActionResult Index()
         {
+            
             return View("Views/Login/Login.cshtml");
         }
 

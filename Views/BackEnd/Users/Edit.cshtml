@@ -19,7 +19,7 @@
 <div class="row center">
     <div class="col-md-12 center">
         <!-- BEGIN VALIDATION STATES-->
-        <form asp-controller="Users" asp-action="Update" method="post">
+        <form asp-controller="Users" asp-action="Update" method="post" enctype="multipart/form-data">
             <div class="portlet box blue">
                 <div class="portlet-body form">
                     <!-- BEGIN FORM-->
@@ -28,7 +28,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label">Name<span class="require">*</span></label>
-                                    <input asp-for="Name" class="form-control" autofocus/>
+                                    <input asp-for="Name" class="form-control" autofocus />
                                     <span asp-validation-for="Name" class="text-danger"></span>
                                 </div>
                             </div>
@@ -39,6 +39,23 @@
                                     <span asp-validation-for="Email" class="text-danger"></span>
                                 </div>
                             </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">BirthDay<span class="require">*</span></label>
+                                    <input asp-for="BirthDay" class="form-control" />
+                                    <span asp-validation-for="BirthDay" class="text-danger"></span>
+                                </div>
+                            </div>  
+                            <div class="col-md-6">
+                                <div class="form-group">                                  
+                                    <label class="control-label">Avatar<span class="require">*</span></label>
+                                    <input asp-for="Avatar" class="form-control" accept="image/*" />
+                                    <span asp-validation-for="Avatar" class="text-danger"></span>
+                                </div>
+                            </div>  
+                            
                         </div>
                         <div class="row">
                             <div class="col-md-6">

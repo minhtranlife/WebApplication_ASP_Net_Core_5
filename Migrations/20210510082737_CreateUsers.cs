@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WebApplication.Migrations
 {
@@ -17,9 +18,11 @@ namespace WebApplication.Migrations
                     Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     PhoneNumber = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Level = table.Column<string>(type: "nvarchar(5)", maxLength: 5, nullable: true),
-                    Sadmin = table.Column<string>(type: "nvarchar(5)", maxLength: 5, nullable: false),
-                    Permission = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    BirthDay = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Level = table.Column<string>(type: "nvarchar(5)", maxLength: 5, nullable: false),
+                    Sadmin = table.Column<string>(type: "nvarchar(5)", maxLength: 5, nullable: true),
+                    Permission = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Avatar = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
