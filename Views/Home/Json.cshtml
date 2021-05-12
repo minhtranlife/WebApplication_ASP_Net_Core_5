@@ -1,0 +1,19 @@
+﻿@{
+    ViewData["Title"] = "Json";
+}
+
+<h3 class="page-title">
+    Supports<small></small>
+</h3>
+<div class="row">
+    <div class="col-md-12">
+        <div class="well">
+            <form asp-controller="Home" asp-action="JsonTest" method="post">
+               @* <input type="text" value="1" name="roles[user][create]"  /> Index*@
+                @*<input type="text" value="1" id="roles[user][create]"  name="roles[user][create]"/>*@ Create
+                @*<input type="text" value="1" name="roler" />*@
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -13,10 +14,12 @@ namespace WebApplication.Controllers
     public class UsersController : Controller
     {
         private readonly ApplicationDbContext _db;
-        
-        public UsersController(ApplicationDbContext db)
+        private readonly IWebHostEnvironment _hostEnvironment;
+
+        public UsersController(ApplicationDbContext db, IWebHostEnvironment hostEnvironment)
         {
-            _db = db;            
+            _db = db;
+            _hostEnvironment = hostEnvironment;
         }
 
         [Route("Users")]
@@ -65,6 +68,24 @@ namespace WebApplication.Controllers
                 }
                 else
                 {
+                    if (user.AvatarFile != null)
+                    {
+                        string wwwRootPath = _hostEnvironment.WebRootPath;
+                        string filename = Path.GetFileNameWithoutExtension(user.AvatarFile.FileName);
+                        string extension = Path.GetExtension(user.AvatarFile.FileName);
+                        //return Ok(extension);
+                        user.Avatar = filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
+                        string path = Path.Combine(wwwRootPath + "/images/avatar/", filename);
+                        using (var FileStream = new FileStream(path, FileMode.Create))
+                        {
+                            user.AvatarFile.CopyToAsync(FileStream);
+                        }
+                    }
+                    else
+                    {
+                        user.Avatar = "default-user.png";
+                    }
+
                     _db.Users.Add(user);
                     _db.SaveChanges();
                     return Redirect("/Users");
@@ -101,7 +122,22 @@ namespace WebApplication.Controllers
         {
             if (!ModelState.IsValid)
             {
+                
                 request.Level = "T";
+                if (request.AvatarFile != null)
+                {
+                    string wwwRootPath = _hostEnvironment.WebRootPath;
+                    string filename = Path.GetFileNameWithoutExtension(request.AvatarFile.FileName);
+                    string extension = Path.GetExtension(request.AvatarFile.FileName);
+                    //return Ok(extension);
+                    request.Avatar = filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
+                    string path = Path.Combine(wwwRootPath + "/images/avatar/", filename);
+                    using (var FileStream = new FileStream(path, FileMode.Create))
+                    {
+                        request.AvatarFile.CopyToAsync(FileStream);
+                    }
+                }
+                
                 _db.Users.Update(request);
                 _db.SaveChanges();
                 return Redirect("/users");
@@ -118,6 +154,16 @@ namespace WebApplication.Controllers
         public IActionResult Delete(int iddelete)
         {
             var model = _db.Users.FirstOrDefault(u => u.Id == iddelete);
+            //delete img from wwwroot/image/avatar
+            if(model.Avatar != "default-user.png")
+            {
+                var imgPath = Path.Combine(_hostEnvironment.WebRootPath, "images/avatar", model.Avatar);
+                if (System.IO.File.Exists(imgPath))
+                {
+                    System.IO.File.Delete(imgPath);
+                }
+
+            }
             _db.Users.Remove(model);
             _db.SaveChanges();
 

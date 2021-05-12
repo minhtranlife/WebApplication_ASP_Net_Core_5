@@ -67,12 +67,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label>Level</label>
-                        <input class="form-control" type="date" id="date" name="date"/>
-                    </div>
-                </div>
+                
             </div>
       
             <hr>
@@ -82,31 +77,35 @@
                         <thead>
                             <tr>
                                 <th style="text-align: center" width="2%">STT</th>
-                                <th style="text-align: center">Tên tài khoản</th>
+                                <th style="text-align: center" width="10%">Avatar</th>
+                                <th style="text-align: center">Name</th>
                                 <th style="text-align: center">Username</th>
                                 <th style="text-align: center" width="5%">Level</th>
-                                <th style="text-align: center" width="10%">Trạng thái</th>
-                                <th style="text-align: center" width="25%">Thao tác</th>
+                                <th style="text-align: center" width="10%">Status</th>
+                                <th style="text-align: center" width="25%">Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach (var item in Model)
                             {
-                                <tr class="odd gradeX">
-                                    <td style="text-align: center">@Html.DisplayFor(modelItem => item.Id)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.Name)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.Username)</td>
-                                    <td style="text-align: center">@Html.DisplayFor(modelItem => item.Level)</td>
-                                    <td></td>
-                                    <td>
-                                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-default btn-xs mbs"><i class="fa fa-edit"></i>&nbsp;Edit</a>
-                                        <button type="button" onclick="getId('@item.Id', '@item.Username', '@item.Name')" class="btn btn-default btn-xs mbs" data-target="#delete-modal" data-toggle="modal">
-                                            <i class="fa fa-trash-o"></i>&nbsp;
-                                            Delete
-                                        </button>
-                                    </td>
+                            <tr class="odd gradeX">
+                                <td style="text-align: center">@item.Id</td>
+                                <td style="text-align: center">
+                                    <img src="@("~/images/avatar/" + item.Avatar)" asp-append-version="true" width="50" height="50" class="img-circle" />
+                                </td>
+                                <td>@item.Name</td>
+                                <td>@item.Username</td>
+                                <td style="text-align: center">@item.Level</td>
+                                <td></td>
+                                <td>
+                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-default btn-xs mbs"><i class="fa fa-edit"></i>&nbsp;Edit</a>
+                                    <button type="button" onclick="getId('@item.Id', '@item.Username', '@item.Name')" class="btn btn-default btn-xs mbs" data-target="#delete-modal" data-toggle="modal">
+                                        <i class="fa fa-trash-o"></i>&nbsp;
+                                        Delete
+                                    </button>
+                                </td>
 
-                                </tr>
+                            </tr>
                             }
                         </tbody>
                     </table>
