@@ -12,6 +12,7 @@ using Newtonsoft.Json;
 
 namespace WebApplication.Controllers
 {
+    
     public class HomeController : Controller
     {
         [Route("")]
@@ -26,22 +27,7 @@ namespace WebApplication.Controllers
             {
                 return View("Views/Home/Index.cshtml");
             }
-        }
-
-        [Route("Home/Json")]
-        [HttpGet]
-        public IActionResult IndexJson()
-        {
-            return View("Views/Home/Json.cshtml");
-
-        }
-
-        public IActionResult JsonTest(string[] roler)
-        {
-            return Ok(roler);
-        }
-       
-
+        }  
     }
 
 }

@@ -51,6 +51,10 @@ namespace WebApplication.Controllers
         {
             if (!ModelState.IsValid)
             {
+                return View("Views/BackEnd/Users/Create.cshtml", user);
+            }
+            else
+            {
                 string md5_password = "";
                 using (MD5 md5Hash = MD5.Create())
                 {
@@ -58,8 +62,6 @@ namespace WebApplication.Controllers
                     md5_password = change;
                 }
                 user.Password = md5_password;
-                user.Sadmin = "";
-                user.Level = "T";
                 var model = _db.Users.FirstOrDefault(u => u.Username == user.Username);
                 if (model != null)
                 {
@@ -85,15 +87,10 @@ namespace WebApplication.Controllers
                     {
                         user.Avatar = "default-user.png";
                     }
-
                     _db.Users.Add(user);
                     _db.SaveChanges();
                     return Redirect("/Users");
-                }
-            }
-            else
-            {
-                return View("Views/BackEnd/Users/Create.cshtml", user);
+                }                
             }
         }
 
@@ -118,12 +115,15 @@ namespace WebApplication.Controllers
 
         [Route("Users/Update")]
         [HttpPost]
-        public IActionResult Update(Users request)
+        public IActionResult Update(Users request, string newPassWord)
         {
+            
             if (!ModelState.IsValid)
             {
-                
-                request.Level = "T";
+                return View("Views/BackEnd/Users/Edit.cshtml", request);
+            }
+            else
+            {               
                 if (request.AvatarFile != null)
                 {
                     string wwwRootPath = _hostEnvironment.WebRootPath;
@@ -137,16 +137,20 @@ namespace WebApplication.Controllers
                         request.AvatarFile.CopyToAsync(FileStream);
                     }
                 }
-                
+                if(newPassWord != null)
+                {
+                    string md5_password = "";
+                    using (MD5 md5Hash = MD5.Create())
+                    {
+                        string change = GetMd5Hash(md5Hash, newPassWord);
+                        md5_password = change;
+                    }
+                    request.Password = md5_password;
+                }
                 _db.Users.Update(request);
                 _db.SaveChanges();
                 return Redirect("/users");
             }
-            else
-            {
-                return View("Views/BackEnd/Users/Create.cshtml", request);
-            }
-
         }
 
         [Route("Users/Delete")]
@@ -166,29 +170,22 @@ namespace WebApplication.Controllers
             }
             _db.Users.Remove(model);
             _db.SaveChanges();
-
             return Redirect("/Users");
         }
 
-
-
         static string GetMd5Hash(MD5 md5Hash, string input)
         {
-
             // Convert the input string to a byte array and compute the hash.
             byte[] data = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(input));
-
             // Create a new Stringbuilder to collect the bytes
             // and create a string.
             StringBuilder sBuilder = new StringBuilder();
-
             // Loop through each byte of the hashed data
             // and format each one as a hexadecimal string.
             for (int i = 0; i < data.Length; i++)
             {
                 sBuilder.Append(data[i].ToString("x2"));
             }
-
             // Return the hexadecimal string.
             return sBuilder.ToString();
         }

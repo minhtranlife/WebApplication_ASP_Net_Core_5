@@ -5,11 +5,19 @@
 @model WebApplication.Models.Users
 @section custom_style{
     <link rel="stylesheet" type="text/css" href="/assets/global/plugins/select2/select2.css" />
+    <link type="text/css" rel="stylesheet" href="/vendors/bootstrap-datepicker/css/datepicker.css">
 }
 
 @section custom_script{
     <script type="text/javascript" src="/assets/global/plugins/jquery-validation/js/jquery.validate.min.js"></script>
     <script type="text/javascript" src="/assets/global/plugins/select2/select2.min.js"></script>
+    <script src="/js/jquery.inputmask.bundle.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $(":input").inputmask();
+        });
+    </script>
 }
 <h3 class="page-title">
     Create<small>&nbsp;User</small>
@@ -26,8 +34,28 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
+                                    <label class="control-label">Avatar<span class="require">*</span></label>
+                                    <input asp-for="AvatarFile" class="form-control" accept="image/*" autofocus/>
+                                    <input type="hidden" asp-for="Avatar" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Level<span class="require">*</span></label>
+                                    <select class="form-control" asp-for="Level">
+                                        <option value="T">Provincials</option>
+                                        <option value="H">Districts</option>
+                                        <option value="X">Town</option>
+                                    </select>
+                                    <span asp-validation-for="Level" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
                                     <label class="control-label">Name<span class="require">*</span></label>
-                                    <input asp-for="Name" class="form-control" autofocus />
+                                    <input asp-for="Name" class="form-control" />
                                     <span asp-validation-for="Name" class="text-danger"></span>
                                 </div>
                             </div>
@@ -43,15 +71,15 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label">BirthDay<span class="require">*</span></label>
-                                    <input asp-for="BirthDay" class="form-control" />
+                                    <input asp-for="BirthDay" class="form-control" min="2000-01-01" max="2050-01-01" />
                                     <span asp-validation-for="BirthDay" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="control-label">Avatar<span class="require">*</span></label>
-                                    <input asp-for="AvatarFile" class="form-control" accept="image/*"/>
-                                    <span asp-validation-for="AvatarFile" class="text-danger"></span>
+                                    <label class="control-label">Phone Number<span class="require">*</span></label>
+                                    <input asp-for="PhoneNumber" class="form-control" />
+                                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
                                 </div>
                             </div>
                         </div>
