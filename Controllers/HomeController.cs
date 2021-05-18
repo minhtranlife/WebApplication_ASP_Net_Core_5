@@ -27,7 +27,21 @@ namespace WebApplication.Controllers
             {
                 return View("Views/Home/Index.cshtml");
             }
-        }  
-    }
+        }
 
+        [Route("Json")]
+        [HttpGet]
+        public IActionResult JsonEdit()
+        {
+            return View("Views/Home/Json.cshtml");
+        }
+
+        [Route("JsonUpdate")]
+        [HttpPost]
+        public IActionResult JsonUpdate()
+        {
+           
+            return Ok(ViewBag);
+        }
+    }
 }

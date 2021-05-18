@@ -14,7 +14,7 @@ namespace WebApplication.Models
         [Display(Name="Id")]
         public int Id { get; set; }
 
-        [Required]        
+        [Required,]        
         [RegularExpression(@"^(?=.{6,32}$)(?!.*[._-]{2})(?!.*[0-9]{5,})[a-z](?:[\w]*|[a-z\d\.]*|[a-z\d-]*)[a-z0-9]$"
             , ErrorMessage="Username error")]
         [Display(Name = "Username")]
@@ -72,7 +72,7 @@ namespace WebApplication.Models
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
-        public string ConfirmPassword { get; set; }
+        public string ConfirmPassword { get; set; }              
 
     }
 }

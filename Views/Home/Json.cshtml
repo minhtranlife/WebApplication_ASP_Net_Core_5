@@ -1,0 +1,21 @@
+﻿@{
+    ViewData["Title"] = "Home";
+}
+@section custom_script{
+ 
+}
+<h3 class="page-title">
+    Supports<small></small>
+</h3>
+<div class="row">
+    <div class="col-md-12">
+        <div class="well">
+            <form asp-controller="Home" asp-action="JsonUpdate" method="post">
+                <input type="text" name="ViewBag[user]" />
+                <input type="text" name="ViewBag[i]" />
+
+                <button type="submit" onclick="">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>

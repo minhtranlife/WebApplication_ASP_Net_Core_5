@@ -25,15 +25,46 @@ namespace WebApplication.Controllers
         [Route("Users")]
         [Route("Users/Index")]
         [HttpGet]
-        public IActionResult Index(string level)
-        {
-            IEnumerable<Users> model = _db.Users;
-            if (!string.IsNullOrEmpty(level) && level != "all")
+        public IActionResult Index(string Level, string Name, int Page, int PageSize)
+        {  
+            if(Page == null || Page < 1)
             {
-                model = model.Where(u => u.Level == level);
+                Page = 1;
             }
-            ViewData["level"] = level;
+            if(PageSize == null || PageSize < 1)
+            {
+                PageSize = 5;
+            }
+            if(PageSize > 10)
+            {
+                PageSize = 10;
+            }
+            IEnumerable<Users> model = _db.Users;
+            if (!string.IsNullOrEmpty(Level) && Level != "all")
+            {
+                model = model.Where(u => u.Level == Level);
+            }
+            if (!string.IsNullOrEmpty(Name))
+            {
+                model = model.Where(u => u.Name.Contains(Name));
+            } 
+            int count = model.Count();
+            model = model.Skip((Page - 1) * PageSize)
+                    .Take(PageSize).ToList();
+
+            int TotalRecords = count;            
+            int TotalPages = Convert.ToInt32(Math.Ceiling((double)TotalRecords / (double)PageSize));                      
+            int NextPage = Page + 1;
+            int PreviousPage = Page - 1;
+
+            ViewData["Level"] = Level;
+            ViewData["Name"] = Name;
             ViewData["Title"] = "Users";
+            ViewData["TotalPages"] = TotalPages;
+            ViewData["TotalRecords"] = TotalRecords;    
+            ViewData["PageSize"] = PageSize;    
+            ViewData["Page"] = Page;    
+
             return View("Views/BackEnd/Users/Index.cshtml", model);
         }
 
@@ -50,10 +81,6 @@ namespace WebApplication.Controllers
         public IActionResult Store(Users user)
         {
             if (!ModelState.IsValid)
-            {
-                return View("Views/BackEnd/Users/Create.cshtml", user);
-            }
-            else
             {
                 string md5_password = "";
                 using (MD5 md5Hash = MD5.Create())
@@ -90,7 +117,12 @@ namespace WebApplication.Controllers
                     _db.Users.Add(user);
                     _db.SaveChanges();
                     return Redirect("/Users");
-                }                
+                }
+            }
+            else
+            {
+                    return View("Views/BackEnd/Users/Create.cshtml", user);                
+
             }
         }
 
@@ -120,10 +152,6 @@ namespace WebApplication.Controllers
             
             if (!ModelState.IsValid)
             {
-                return View("Views/BackEnd/Users/Edit.cshtml", request);
-            }
-            else
-            {               
                 if (request.AvatarFile != null)
                 {
                     string wwwRootPath = _hostEnvironment.WebRootPath;
@@ -137,7 +165,7 @@ namespace WebApplication.Controllers
                         request.AvatarFile.CopyToAsync(FileStream);
                     }
                 }
-                if(newPassWord != null)
+                if (newPassWord != null)
                 {
                     string md5_password = "";
                     using (MD5 md5Hash = MD5.Create())
@@ -150,6 +178,10 @@ namespace WebApplication.Controllers
                 _db.Users.Update(request);
                 _db.SaveChanges();
                 return Redirect("/users");
+            }
+            else
+            {
+                return View("Views/BackEnd/Users/Edit.cshtml", request);                
             }
         }
 

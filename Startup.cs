@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using WebApplication.Data;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using ReflectionIT.Mvc.Paging;
 
 namespace WebApplication
 {
@@ -24,6 +25,7 @@ namespace WebApplication
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
+        [Obsolete]
         public void ConfigureServices(IServiceCollection services)
         {    
             services.AddDbContext<ApplicationDbContext>(options =>
@@ -43,6 +45,7 @@ namespace WebApplication
             {
                 options.Conventions.AddPageRoute("/Login", "");
             });
+            services.AddPaging();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
