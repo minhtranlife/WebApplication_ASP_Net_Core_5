@@ -35,9 +35,9 @@ namespace WebApplication.Controllers
             {
                 PageSize = 5;
             }
-            if(PageSize > 10)
+            if(PageSize > 20)
             {
-                PageSize = 10;
+                PageSize = 20;
             }
             IEnumerable<Users> model = _db.Users;
             if (!string.IsNullOrEmpty(Level) && Level != "all")

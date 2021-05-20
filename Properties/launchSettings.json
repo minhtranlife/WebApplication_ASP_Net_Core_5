@@ -3,17 +3,16 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:21478",
+      "applicationUrl": "http://localhost:23573",
       "sslPort": 44331
     }
   },
   "profiles": {
     "IIS Express": {
-      "commandName": "Project",
+      "commandName": "IISExpress",
       "launchBrowser": true,
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development",
-        "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation"
+        "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "applicationUrl": "http://webapplication.local"
     },
