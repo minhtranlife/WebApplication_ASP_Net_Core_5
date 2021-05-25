@@ -13,6 +13,8 @@ namespace WebApplication.Data
         {
         }
         public DbSet<Users> Users { get; set; }
+        public DbSet<KeKhai> KeKhai { get; set; }
+        public DbSet<KeKhaiCt> KeKhaiCt { get; set; }
         
     }
 }
