@@ -75,20 +75,22 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @{int i = 0; }
                                 @foreach (var item in Model)
                                 {
-                                    <tr>
-                                        <td>@item.Id</td>
-                                        <td>@item.mahs</td>
-                                        <td>@item.mota</td>
-                                        <td>
-                                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-default btn-xs mbs"><i class="fa fa-edit"></i>&nbsp;Edit</a>
-                                            <button type="button" onclick="getId('@item.Id')" class="btn btn-default btn-xs mbs" data-target="#delete-modal" data-toggle="modal">
-                                                <i class="fa fa-trash-o"></i>&nbsp;
-                                                Delete
-                                            </button>
-                                        </td>
-                                    </tr>
+                                <tr>
+                                    @{i++; }
+                                    <td style="text-align:center">@i</td>
+                                    <td style="text-align:center">@item.mahs</td>
+                                    <td>@item.mota</td>
+                                    <td>
+                                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-default btn-xs mbs"><i class="fa fa-edit"></i>&nbsp;Edit</a>
+                                        <button type="button" onclick="getId('@item.Id')" class="btn btn-default btn-xs mbs" data-target="#delete-modal" data-toggle="modal">
+                                            <i class="fa fa-trash-o"></i>&nbsp;
+                                            Delete
+                                        </button>
+                                    </td>
+                                </tr>
                                 }
                             </tbody>
                         </table>

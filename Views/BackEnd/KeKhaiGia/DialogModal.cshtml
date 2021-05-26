@@ -1,0 +1,155 @@
+﻿<!--Modal Create-->
+<div class="modal fade bs-modal-lg" id="modal-create" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">Add</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="form-control-label"><b>Describe</b><span class="require">*</span></label>
+                            <input id="Describe" name="Describe" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn btn-default">Exiy</button>
+                <button type="button" class="btn btn-primary" onclick="Create()">Add</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<!--Modal Delete-->
+<div class="modal fade" id="modal-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">Đồng ý xóa thông tin?</h4>
+            </div>
+            <input hidden id="iddelete" name="iddelete">
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn btn-default">Exit</button>
+                <button type="button" class="btn btn-primary" onclick="Delete()">Delete</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<!--Modal Edit-->
+<div class="modal fade bs-modal-lg" id="modal-edit" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">Edit</h4>
+            </div>
+            <div class="modal-body" id="edit_ct">
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn btn-default">Exit</button>
+                <button type="button" class="btn btn-primary" onclick="Update()">Update</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<script>
+    function clearForm() {
+        $('#Describe').val('');
+    }
+    function Create() {
+        $.ajax({
+            url: '/KeKhaiGiaCt/store',
+            type: 'POST',
+            data: {
+                Describe: $('#Describe').val(),
+                Mahs: $('input[name="Kekhai.mahs"]').val()
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.status == 'success') {
+                    toastr.success("Create Success!");
+                    $('#hsct').replaceWith(data.message);
+                    jQuery(document).ready(function () {
+                        TableManaged.init();
+                    });
+                    $('#modal-create').modal("hide");
+                }
+            }
+        })
+    }
+    function getId(id) {
+        document.getElementById("iddelete").value = id;
+    }
+    function Delete() {
+        $.ajax({
+            url: '/KeKhaiGiaCt/Delete',
+            type: 'POST',
+            data: {
+                id: $('#iddelete').val(),
+                Mahs: $('input[name="Kekhai.mahs"]').val()
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.status == 'success') {
+                    toastr.success("Delete Success!");
+                    $('#hsct').replaceWith(data.message);
+                    jQuery(document).ready(function () {
+                        TableManaged.init();
+                    });
+                    $('#modal-delete').modal("hide");
+                }
+            }
+        })
+    }
+    function Edit(id) {
+        $.ajax({
+            url: '/KeKhaiGiaCt/Edit',
+            type: 'POST',
+            data: {
+                id: id,
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.status == 'success') {
+                    $('#edit_ct').replaceWith(data.message);
+                } else {
+                    toastr.error("No Data!", "Error!");
+                }
+            }
+        })
+    }
+    function Update() {
+        $.ajax({
+            url: '/KeKhaiGiaCt/Update',
+            type: 'POST',
+            data: {   
+                id: $('#id_edit').val(),
+                Describe: $('#Describe_edit').val(),
+                Mahs: $('input[name="Kekhai.mahs"]').val()
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.status == 'success') {
+                    toastr.success("Update Success!");
+                    $('#hsct').replaceWith(data.message);
+                    jQuery(document).ready(function () {
+                        TableManaged.init();
+                    });
+                    $('#modal-edit').modal("hide");
+                }
+            }
+        })
+    }
+</script>

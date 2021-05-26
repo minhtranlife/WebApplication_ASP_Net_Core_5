@@ -60,8 +60,7 @@ namespace WebApplication.Controllers.KeKhaiGia
             model.mota = Mota;            
             _db.SaveChanges();
 
-            return Redirect("/KeKhaiGia");
-            //return Ok(Id + "-" + Mahs + "-" + Mota);
+            return Redirect("/KeKhaiGia");            
         }
     }
 }

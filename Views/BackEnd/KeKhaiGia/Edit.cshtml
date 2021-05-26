@@ -6,7 +6,7 @@
 
 @section custom_style{
     <link rel="stylesheet" type="text/css" href="/assets/global/plugins/select2/select2.css" />
-    <link type="text/css" rel="stylesheet" href="/vendors/bootstrap-datepicker/css/datepicker.css">
+    @*<link type="text/css" rel="stylesheet" href="/vendors/bootstrap-datepicker/css/datepicker.css">*@
     <link rel="stylesheet" type="text/css" href="/assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.css" />
 }
 
@@ -23,6 +23,7 @@
             TableManaged.init();
         });
     </script>
+
 }
 <h3 class="page-title">
     Edit<small>&nbsp;Kê khai</small>
@@ -52,14 +53,17 @@
                                     <span asp-validation-for="@Model.Kekhai.mota" class="text-danger"></span>
                                 </div>
                             </div>
-                            <input asp-for="@Model.Kekhai.Id" />
+                            <input hidden asp-for="@Model.Kekhai.Id" />
                         </div>
                         <h4 class="form-section" style="color: #0000ff">Thông tin chi tiết hồ sơ</h4>
-                        <div class="row">
+                        <div class="row" style="text-align:right">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <button type="button" data-target="#modal-create" data-toggle="modal" class="btn btn-success btn-xs" onclick="clearForm()"><i class="fa fa-plus"></i>&nbsp;Create</button>
-                                    &nbsp;
+                                    <button type="button" data-target="#modal-create" data-toggle="modal"
+                                            class="btn btn-default btn-sm" onclick="clearForm()">
+                                        <i class="fa fa-plus"></i>
+                                        &nbsp;Create
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -81,11 +85,14 @@
                                                 <td>@item.Id</td>
                                                 <td>@item.Mahs</td>
                                                 <td>@item.Describe</td>
-                                                <td>
-                                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-default btn-xs mbs"><i class="fa fa-edit"></i>&nbsp;Edit</a>
-                                                    <button type="button" onclick="getId('@item.Id')" class="btn btn-default btn-xs mbs" data-target="#delete-modal" data-toggle="modal">
-                                                        <i class="fa fa-trash-o"></i>&nbsp;
-                                                        Delete
+                                                <td>                                                    
+                                                    <button type="button" data-target="#modal-edit" data-toggle="modal"
+                                                            class="btn btn-default btn-xs mbs" onclick="Edit('@item.Id')">
+                                                        <i class="fa fa-edit"></i>&nbsp;Edit
+                                                    </button>
+                                                    <button type="button" data-target="#modal-delete" data-toggle="modal"
+                                                            class="btn btn-default btn-xs mbs" onclick="getId('@item.Id')">
+                                                        <i class="fa fa-trash-o"></i>&nbsp;Delete
                                                     </button>
                                                 </td>
                                             </tr>
@@ -97,7 +104,6 @@
                     </div>
                     <!-- END FORM-->
                 </div>
-
             </div>
             <div style="text-align: center">
                 <a asp-controller="KeKhaiGia" asp-action="Index" class="btn btn-danger"><i class="fa fa-reply"></i>&nbsp;Back</a>
@@ -108,9 +114,9 @@
         <!-- END VALIDATION STATES-->
     </div>
 </div>
+<div class="clearfix"></div>
+@await Html.PartialAsync("~/Views/BackEnd/KeKhaiGia/DialogModal.cshtml")
 
 @section Scripts{
     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
-<div class="clearfix"></div>
-
