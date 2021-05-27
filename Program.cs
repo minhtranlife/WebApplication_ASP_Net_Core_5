@@ -23,6 +23,11 @@ namespace WebApplication
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                });       
+                });  
+        
+        public string GetString()
+        {
+            return "ABC";
+        }
     }
 }

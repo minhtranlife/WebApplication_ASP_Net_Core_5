@@ -19,8 +19,4 @@
     <PackageReference Include="ReflectionIT.Mvc.Paging" Version="5.1.1" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Views\FrontEnd\" />
-  </ItemGroup>
-
 </Project>

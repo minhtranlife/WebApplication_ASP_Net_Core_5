@@ -38,10 +38,17 @@ namespace WebApplication.Controllers
 
         [Route("JsonUpdate")]
         [HttpPost]
-        public IActionResult JsonUpdate()
+        public IActionResult JsonUpdate(Dictionary<string, object> request)
         {
-           
-            return Ok(ViewBag);
+            var data = request;
+            return Ok(data);
+        }
+        
+        [Route("View")]
+        [HttpGet]
+        public IActionResult ViewFB()
+        {
+            return View("Views/FrontEnd/Home/Index.cshtml");
         }
     }
 }
