@@ -26,16 +26,16 @@ namespace WebApplication.Controllers
         [Route("Users/Index")]
         [HttpGet]
         public IActionResult Index(string Level, string Name, int Page, int PageSize)
-        {  
-            if(Page == null || Page < 1)
+        {
+            if (Page == null || Page < 1)
             {
                 Page = 1;
             }
-            if(PageSize == null || PageSize < 1)
+            if (PageSize == null || PageSize < 1)
             {
                 PageSize = 5;
             }
-            if(PageSize > 20)
+            if (PageSize > 20)
             {
                 PageSize = 20;
             }
@@ -47,13 +47,13 @@ namespace WebApplication.Controllers
             if (!string.IsNullOrEmpty(Name))
             {
                 model = model.Where(u => u.Name.Contains(Name));
-            } 
+            }
             int count = model.Count();
             model = model.Skip((Page - 1) * PageSize)
                     .Take(PageSize).ToList();
 
-            int TotalRecords = count;            
-            int TotalPages = Convert.ToInt32(Math.Ceiling((double)TotalRecords / (double)PageSize));                      
+            int TotalRecords = count;
+            int TotalPages = Convert.ToInt32(Math.Ceiling((double)TotalRecords / (double)PageSize));
             int NextPage = Page + 1;
             int PreviousPage = Page - 1;
 
@@ -61,9 +61,9 @@ namespace WebApplication.Controllers
             ViewData["Name"] = Name;
             ViewData["Title"] = "Users";
             ViewData["TotalPages"] = TotalPages;
-            ViewData["TotalRecords"] = TotalRecords;    
-            ViewData["PageSize"] = PageSize;    
-            ViewData["Page"] = Page;    
+            ViewData["TotalRecords"] = TotalRecords;
+            ViewData["PageSize"] = PageSize;
+            ViewData["Page"] = Page;
 
             return View("Views/BackEnd/Users/Index.cshtml", model);
         }
@@ -121,7 +121,7 @@ namespace WebApplication.Controllers
             }
             else
             {
-                    return View("Views/BackEnd/Users/Create.cshtml", user);                
+                return View("Views/BackEnd/Users/Create.cshtml", user);
 
             }
         }
@@ -149,7 +149,7 @@ namespace WebApplication.Controllers
         [HttpPost]
         public IActionResult Update(Users request, string newPassWord)
         {
-            
+
             if (!ModelState.IsValid)
             {
                 if (request.AvatarFile != null)
@@ -181,7 +181,7 @@ namespace WebApplication.Controllers
             }
             else
             {
-                return View("Views/BackEnd/Users/Edit.cshtml", request);                
+                return View("Views/BackEnd/Users/Edit.cshtml", request);
             }
         }
 
@@ -191,7 +191,7 @@ namespace WebApplication.Controllers
         {
             var model = _db.Users.FirstOrDefault(u => u.Id == iddelete);
             //delete img from wwwroot/image/avatar
-            if(model.Avatar != "default-user.png")
+            if (model.Avatar != "default-user.png")
             {
                 var imgPath = Path.Combine(_hostEnvironment.WebRootPath, "images/avatar", model.Avatar);
                 if (System.IO.File.Exists(imgPath))
@@ -204,7 +204,7 @@ namespace WebApplication.Controllers
             _db.SaveChanges();
             return Redirect("/Users");
         }
-
+        
         static string GetMd5Hash(MD5 md5Hash, string input)
         {
             // Convert the input string to a byte array and compute the hash.

@@ -1,0 +1,99 @@
+﻿<div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form asp-controller="KeKhaiGia" asp-action="Delete" method="post">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h4 class="modal-title">Đồng ý xóa?</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" name="iddelete" id="iddelete">
+                <div class="modal-footer">
+                    <button type="submit" class="btn blue" onclick="ClickDelete()">Đồng ý</button>
+                    <button type="button" class="btn default" data-dismiss="modal">Hủy</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </form>
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<div class="modal fade" id="create-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form asp-controller="Permission" asp-action="Store" method="post">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h4 class="modal-title">Add Permission?</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <div class="form-group">
+                                    <label for="selGender" class="control-label">
+                                        Username:
+                                        <b style="color: #0000FF">@ViewData["username"]</b>
+                                        <input id="username" name="username" value="@ViewData["username"]" />
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="selGender" class="control-label">Roler</label>
+                                <input name="Roler" id="Roler" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="selGender" class="control-label">Index</label>
+                                <input type="checkbox" class="form-control" value="true" id="index" name="index" />
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="selGender" class="control-label">Create</label>
+                                <input type="checkbox" class="form-control" value="true" id="create" name="create" />
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="selGender" class="control-label">Edit</label>
+                                <input type="checkbox" class="form-control" value="true" id="edit" name="edit" />
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="selGender" class="control-label">Delete</label>
+                                <input type="checkbox" class="form-control" value="true" id="delete" name="delete" />
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="selGender" class="control-label">Index</label>
+                                <input type="checkbox" class="form-control" value="true" id="approval" name="approval" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn blue">Create</button>
+                    <button type="button" class="btn default" data-dismiss="modal">Exit</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </form>
+    </div>
+    <!-- /.modal-dialog -->
+</div>
