@@ -8,6 +8,7 @@ using System.Security.Cryptography;
 using System.Text;
 using WebApplication.Data;
 using WebApplication.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace WebApplication.Controllers
 {
@@ -33,7 +34,7 @@ namespace WebApplication.Controllers
             }
             if (PageSize == null || PageSize < 1)
             {
-                PageSize = 5;
+                PageSize = 2;
             }
             if (PageSize > 20)
             {
@@ -64,7 +65,7 @@ namespace WebApplication.Controllers
             ViewData["TotalRecords"] = TotalRecords;
             ViewData["PageSize"] = PageSize;
             ViewData["Page"] = Page;
-
+            
             return View("Views/BackEnd/Users/Index.cshtml", model);
         }
 

@@ -44,7 +44,7 @@ namespace WebApplication.Models
         [Display(Name = "Name")]
         public string Name { get; set; }
 
-        [Required]       
+        [Required]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]           
         [Display(Name = "BirthDay")]

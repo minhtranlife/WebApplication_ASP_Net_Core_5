@@ -17,5 +17,12 @@ namespace WebApplication.Data
         public DbSet<KeKhaiCt> KeKhaiCt { get; set; }
         public DbSet<Permission> Permission { get; set; }
         
+        
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Permission>().HasData(
+                new Permission { Id=99,Username = "T", Roler = "user", Index = true, Create = true, Edit = true, Delete = true, Approval = true }
+                );
+        }
     }
 }

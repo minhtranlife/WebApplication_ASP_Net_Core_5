@@ -8,13 +8,20 @@ using System.Threading.Tasks;
 using WebApplication.Models;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
-
+using WebApplication.Data;
 
 namespace WebApplication.Controllers
 {
     
     public class HomeController : Controller
     {
+        private readonly ApplicationDbContext _db;
+
+        public HomeController(ApplicationDbContext db)
+        {
+            _db = db;
+        }
+
         [Route("")]
         [Route("Home")]
         public IActionResult Index()
@@ -25,6 +32,7 @@ namespace WebApplication.Controllers
             }
             else
             {
+                ViewData["ssa"] = HttpContext.Session.GetString("SsaAdmin");
                 return View("Views/Home/Index.cshtml");
             }
         }
@@ -33,14 +41,16 @@ namespace WebApplication.Controllers
         [HttpGet]
         public IActionResult JsonEdit()
         {
-            return View("Views/Home/Json.cshtml");
+            var model = _db.Permission.Where(p => p.Username == "minhtran" && p.Roler == "user").First();
+            return Ok(model);
+            //    return View("Views/Home/Json.cshtml");
         }
 
         [Route("JsonUpdate")]
         [HttpPost]
-        public IActionResult JsonUpdate(Dictionary<string, object> request)
+        public IActionResult JsonUpdate()
         {
-            var data = request;
+            var data = Request.Form["roler.user.index"];
             return Ok(data);
         }
         
@@ -48,7 +58,8 @@ namespace WebApplication.Controllers
         [HttpGet]
         public IActionResult ViewFB()
         {
+
             return View("Views/FrontEnd/Home/Index.cshtml");
         }
-    }
+    }   
 }

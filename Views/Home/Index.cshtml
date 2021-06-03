@@ -3,31 +3,35 @@
 }
 
 @using Microsoft.AspNetCore.Http;
-@using Newtonsoft.Json;
 @{
 
     string session = Context.Session.GetString("SsAdmin");
+    string permission = Context.Session.GetString("Permission");
 
-    dynamic sessionInfo = JsonConvert.DeserializeObject(session);
-    string permission = sessionInfo.Permission;
-    dynamic permissionInfo =null;
-    if (permission != null)
-    {
-        permissionInfo = JsonConvert.DeserializeObject(permission);
-    }
+    //dynamic sessionInfo = JsonConvert.DeserializeObject(session);
+    //string permission = sessionInfo.Permission;
+    //dynamic permissionInfo =null;
+    //if (permission != null)
+    //{
+    //    permissionInfo = JsonConvert.DeserializeObject(permission);
+    //}
 
 }
+
 <h3 class="page-title">
     Supports<small></small>
 </h3>
 <div class="row">
-    <div class="col-md-12">
-        <div class="well">
-            @Context.Session.GetString("SsAdmin")<br />
-            <b>@permissionInfo</b><br/>
-            @*<b>@permissionInfo.users</b><br/>
-            <b>@permissionInfo.users["index"]</b><br/>
-            <b>@permissionInfo.system["delete"]</b><br/>*@
-        </div>
+    <div class="well">
+
+        @*@Global_Funtions.GetSession(session, "Name")
+            <br />
+            @Global_Funtions.GetSession(session, "Username")*@
+        <br />
+        @*@permission*@
+        <br />
+        @Global_Funtions.CheckPermission("minhtran", "user", "index")
+        @Global_Funtions.GetSession(session, "Username")
+        @Global_Funtions.GetValue();
     </div>
 </div>

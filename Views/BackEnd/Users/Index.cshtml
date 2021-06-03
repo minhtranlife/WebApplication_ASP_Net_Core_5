@@ -137,6 +137,7 @@
                                 <label>
                                     Hiển thị
                                     <select class="form-control input-xsmall input-inline" name="pagesize" id="pagesize">
+                                        <!option value="2" @((int)ViewData["PageSize"] == 2 ? "selected" : "")>2</!option>
                                         <!option value="5" @((int)ViewData["PageSize"] == 5 ? "selected" : "")>5</!option>
                                         <!option value="10" @((int)ViewData["PageSize"] == 10 ? "selected" : "")>10</!option>
                                         <!option value="20" @((int)ViewData["PageSize"] == 20 ? "selected" : "")>20</!option>
