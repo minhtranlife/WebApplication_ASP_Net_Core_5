@@ -3,35 +3,17 @@
 }
 
 @using Microsoft.AspNetCore.Http;
-@{
-
-    string session = Context.Session.GetString("SsAdmin");
-    string permission = Context.Session.GetString("Permission");
-
-    //dynamic sessionInfo = JsonConvert.DeserializeObject(session);
-    //string permission = sessionInfo.Permission;
-    //dynamic permissionInfo =null;
-    //if (permission != null)
-    //{
-    //    permissionInfo = JsonConvert.DeserializeObject(permission);
-    //}
-
-}
+@inject IHttpContextAccessor HttpContextAccessor
 
 <h3 class="page-title">
     Supports<small></small>
 </h3>
 <div class="row">
     <div class="well">
-
-        @*@Global_Funtions.GetSession(session, "Name")
-            <br />
-            @Global_Funtions.GetSession(session, "Username")*@
         <br />
-        @*@permission*@
-        <br />
-        @Global_Funtions.CheckPermission("minhtran", "user", "index")
-        @Global_Funtions.GetSession(session, "Username")
-        @Global_Funtions.GetValue();
+        <h1>@HttpContextAccessor.HttpContext.Session.GetString("Name")</h1>
+      
+        @Helper_Funtions.TestStr()
+        @*@Helper_Funtions.GetValueSession()*@
     </div>
 </div>

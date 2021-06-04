@@ -173,9 +173,9 @@
                     </li>
                     <li class="dropdown dropdown-user">
                         <a href="" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                            <img alt="" class="img-circle" src="@("~/images/avatar/" + @Global_Funtions.GetSession(session, "Avatar" ))" asp-append-version="true" />
+                            <img alt="" class="img-circle" src="@("~/images/avatar/" + Helper_Funtions.GetSession(session, "Avatar" ))" asp-append-version="true" />
                             <span class="username">
-                                <b>@Global_Funtions.GetSession(session, "Name" )</b>
+                                <b>@Helper_Funtions.GetSession(session, "Name" )</b>
                             </span>
                             <i class="fa fa-angle-down"></i>
                         </a>

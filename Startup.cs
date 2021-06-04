@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using WebApplication.Data;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
 
 namespace WebApplication
 {
@@ -33,6 +34,7 @@ namespace WebApplication
             services.AddRazorPages();
             services.AddDistributedMemoryCache();
             services.AddControllersWithViews();
+         
             services.AddSession(options =>
             {
                 options.IdleTimeout = TimeSpan.FromMinutes(30);
@@ -44,7 +46,9 @@ namespace WebApplication
             {
                 options.Conventions.AddPageRoute("/Login", "");                
             });
-      
+            services.AddHttpContextAccessor();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();   
+            services.AddScoped<Helper_Funtions>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -64,7 +68,6 @@ namespace WebApplication
             app.UseStaticFiles();
             app.UseSession();
             app.UseRouting();
-           
 
             app.UseAuthorization();
 
@@ -74,7 +77,6 @@ namespace WebApplication
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
-
         }
      
     }

@@ -14,11 +14,11 @@ namespace WebApplication.Controllers
 {
     public class LoginController : Controller
     {
-        private readonly ApplicationDbContext _db;
+        private readonly ApplicationDbContext _db;       
 
         public LoginController(ApplicationDbContext db)
         {
-            _db = db;
+            _db = db;          
         }
 
 
@@ -35,7 +35,6 @@ namespace WebApplication.Controllers
         {
             if (username != null && password != null)
             {
-
                 try
                 {
                     var model = _db.Users.Where(u => u.Username == username).First();
@@ -43,16 +42,18 @@ namespace WebApplication.Controllers
                     string md5_password = "";
                     using (MD5 md5Hash = MD5.Create())
                     {
-                        string change = Global_Funtions.GetMd5Hash(md5Hash, password);
+                        string change = Helper_Funtions.GetMd5Hash(md5Hash, password);
                         md5_password = change;
                     }                  
                     if (model.Password == md5_password)
                     {
                         var permission = _db.Permission.Where(p => p.Username == model.Username);
 
-
                         HttpContext.Session.SetString("SsAdmin", JsonConvert.SerializeObject(model));
                         HttpContext.Session.SetString("Permission", JsonConvert.SerializeObject(permission));
+                        HttpContext.Session.SetString("Name","MinhTran");
+
+
                         return Redirect("/");
                     }
                     else
@@ -78,9 +79,8 @@ namespace WebApplication.Controllers
         [HttpGet]
         public IActionResult Logout()
         {
-            HttpContext.Session.Remove("username");
-            HttpContext.Session.Remove("name");
-            HttpContext.Session.Remove("permission");
+            
+            HttpContext.Session.Remove("Permission");
             HttpContext.Session.Remove("SsAdmin");
             return Redirect("/Login");
         }
