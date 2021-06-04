@@ -44,13 +44,11 @@ namespace WebApplication.Models
         [Display(Name = "Name")]
         public string Name { get; set; }
 
-        [Required]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]           
         [Display(Name = "BirthDay")]
         public DateTime BirthDay { get; set; }
                 
-        [Required]
         [MaxLength(5)]
         [Display(Name = "Level")]
         public string Level { get; set; }   
